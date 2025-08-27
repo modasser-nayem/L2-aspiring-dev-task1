@@ -16,43 +16,77 @@ const http_1 = require("http");
 const app_1 = __importDefault(require("./app"));
 const logger_1 = __importDefault(require("./app/utils/logger"));
 const db_1 = require("./app/db");
-class AppServer {
-    constructor() {
-        this.port = process.env.PORT || 5000;
-        this.server = (0, http_1.createServer)(app_1.default);
-        this.startServer();
-        this.databaseConnect();
-        this.handleProcessEvents();
-    }
-    startServer() {
-        this.server = app_1.default.listen(this.port, () => {
-            logger_1.default.info(`SERVER IS RUNNING ON PORT ${this.port}`);
+// class AppServer {
+//   private port: number | string;
+//   private server: Server;
+//   constructor() {
+//     this.port = process.env.PORT || 5000;
+//     this.server = createServer(app);
+//     this.startServer();
+//     this.databaseConnect();
+//     this.handleProcessEvents();
+//   }
+//   private startServer(): void {
+//     this.server = app.listen(this.port, () => {
+//       logger.info(`SERVER IS RUNNING ON PORT ${this.port}`);
+//     });
+//   }
+//   private async databaseConnect(): Promise<void> {
+//     await dbConnect();
+//   }
+//   private handleProcessEvents(): void {
+//     process.on("unhandledRejection", (err) => {
+//       console.error(
+//         `Unhandled Rejection detected. Shutting down server...`,
+//         err,
+//       );
+//       this.shutdownServer();
+//     });
+//     process.on("uncaughtException", (err) => {
+//       console.error(
+//         `Uncaught Exception detected. Shutting down server...`,
+//         err,
+//       );
+//       process.exit(1);
+//     });
+//   }
+//   private shutdownServer(): void {
+//     if (this.server) {
+//       this.server.close(() => {
+//         process.exit(1);
+//       });
+//     } else {
+//       process.exit(1);
+//     }
+//   }
+// }
+// new AppServer();
+let server = (0, http_1.createServer)(app_1.default);
+const port = process.env.PORT || 5000;
+function main() {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield (0, db_1.dbConnect)();
+        server = app_1.default.listen(port, () => {
+            logger_1.default.info(`SERVER IS RUNNING ON PORT ${port}`);
         });
-    }
-    databaseConnect() {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield (0, db_1.dbConnect)();
-        });
-    }
-    handleProcessEvents() {
-        process.on("unhandledRejection", (err) => {
-            console.error(`Unhandled Rejection detected. Shutting down server...`, err);
-            this.shutdownServer();
-        });
-        process.on("uncaughtException", (err) => {
-            console.error(`Uncaught Exception detected. Shutting down server...`, err);
+    });
+}
+function shutdownServer() {
+    if (server) {
+        server.close(() => {
             process.exit(1);
         });
     }
-    shutdownServer() {
-        if (this.server) {
-            this.server.close(() => {
-                process.exit(1);
-            });
-        }
-        else {
-            process.exit(1);
-        }
+    else {
+        process.exit(1);
     }
 }
-new AppServer();
+process.on("unhandledRejection", (err) => {
+    console.error(`Unhandled Rejection detected. Shutting down server...`, err);
+    shutdownServer();
+});
+process.on("uncaughtException", (err) => {
+    console.error(`Uncaught Exception detected. Shutting down server...`, err);
+    process.exit(1);
+});
+main();

@@ -1,13 +1,13 @@
 import { AxiosError } from "axios";
 import { toast } from "react-hot-toast";
 import { UseFormSetError, FieldValues, Path } from "react-hook-form";
-import { ApiErrorResponse } from "@/types";
+import { FailedResponse } from "@/types";
 
 export function handleApiError<T extends FieldValues>(
    error: unknown,
    setError?: UseFormSetError<T>
 ): void {
-   const axiosError = error as AxiosError<ApiErrorResponse>;
+   const axiosError = error as AxiosError<FailedResponse>;
    const responseData = axiosError?.response?.data;
 
    if (!responseData) {
