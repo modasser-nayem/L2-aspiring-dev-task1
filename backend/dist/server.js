@@ -18,9 +18,9 @@ const db_1 = require("./app/db");
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
+            yield (0, db_1.dbConnect)();
             const port = process.env.PORT || 5000;
             const server = (0, http_1.createServer)(app_1.default);
-            yield (0, db_1.dbConnect)();
             server.listen(port, () => {
                 console.log(`SERVER IS RUNNING ON PORT ${port}`);
             });

@@ -4,10 +4,10 @@ import { dbConnect } from "./app/db";
 
 async function main() {
   try {
+    await dbConnect();
     const port = process.env.PORT || 5000;
     const server = createServer(app);
 
-    await dbConnect();
     server.listen(port, () => {
       console.log(`SERVER IS RUNNING ON PORT ${port}`);
     });

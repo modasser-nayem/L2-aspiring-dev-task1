@@ -16,13 +16,31 @@ exports.postController = void 0;
 const post_service_1 = require("../services/post.service");
 const asyncHandler_1 = require("../utils/asyncHandler");
 const sendResponse_1 = __importDefault(require("../utils/sendResponse"));
-const testController = (0, asyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield post_service_1.postService.testService();
+const createPost = (0, asyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield post_service_1.postService.createPost(req.body);
     (0, sendResponse_1.default)(res, {
-        statusCode: 200,
+        statusCode: 201,
         success: true,
-        message: "Successfully Working",
+        message: "Post Successfully Created",
         data: result,
     });
 }));
-exports.postController = { testController };
+const getAllPost = (0, asyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield post_service_1.postService.getAllPost();
+    (0, sendResponse_1.default)(res, {
+        statusCode: 200,
+        success: true,
+        message: "Successfully Retrieved all post",
+        data: result,
+    });
+}));
+const getSinglePost = (0, asyncHandler_1.asyncHandler)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield post_service_1.postService.getSinglePost(req.params.id);
+    (0, sendResponse_1.default)(res, {
+        statusCode: 200,
+        success: true,
+        message: "Post successfully Retrieved",
+        data: result,
+    });
+}));
+exports.postController = { createPost, getAllPost, getSinglePost };

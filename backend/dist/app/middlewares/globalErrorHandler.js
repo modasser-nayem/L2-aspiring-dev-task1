@@ -8,6 +8,7 @@ const zod_1 = require("zod");
 const zodErrorHandler_1 = __importDefault(require("../errors/zodErrorHandler"));
 const AppError_1 = __importDefault(require("../errors/AppError"));
 const config_1 = __importDefault(require("../config"));
+const mongoose_1 = __importDefault(require("mongoose"));
 const globalErrorHandler = (err, _req, res, _next) => {
     let message = err.message || "Something went wrong!";
     let statusCode = err.statusCode || 500;
@@ -18,6 +19,15 @@ const globalErrorHandler = (err, _req, res, _next) => {
         statusCode = result.statusCode;
         message = result.message;
         error = result.error;
+    }
+    else if (err instanceof mongoose_1.default.Error.CastError) {
+        statusCode = 400;
+        message = "Invalid ID format";
+        error = {
+            path: err.path,
+            value: err.value,
+            kind: err.kind,
+        };
     }
     else if (err instanceof AppError_1.default) {
         statusCode = err.statusCode;
