@@ -1,3 +1,4 @@
+import MainLayout from "@/components/layout/MainLayout";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
@@ -34,7 +35,7 @@ export default function RootLayout({
          className={`${inter.variable} ${poppins.variable}`}
       >
          <body className={`${inter.className} antialiased font-sans`}>
-            <main>{children}</main>
+            <MainLayout>{children}</MainLayout>
             <Toaster
                position="top-right"
                toastOptions={{

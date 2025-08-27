@@ -5,9 +5,8 @@ import { createPostValidation } from "../validation/post";
 export interface IPost extends Document {
   title: string;
   content: string;
-  author: string;
+  author: { name: string; picture: string };
   createdAt: Date;
-  updatedAt: Date;
 }
 
 export type ICreatePost = z.infer<typeof createPostValidation>;

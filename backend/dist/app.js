@@ -38,7 +38,7 @@ app.get("/api/health", (req, res) => {
         message: "Server Health is Ok",
     });
 });
-app.use("/api/", routes_1.default);
+app.use("/api", routes_1.default);
 // error handlers
 app.use(notFound_1.notfound);
 app.use(globalErrorHandler_1.globalErrorHandler);

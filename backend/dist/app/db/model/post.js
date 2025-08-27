@@ -37,7 +37,14 @@ const mongoose_1 = __importStar(require("mongoose"));
 const PostSchema = new mongoose_1.Schema({
     title: { type: String, required: true },
     content: { type: String, required: true },
-    author: { type: String, required: true },
-}, { timestamps: true });
+    author: {
+        name: {
+            type: String,
+            required: true,
+        },
+        picture: { type: String, required: true },
+    },
+    createdAt: { type: Date, default: Date.now },
+});
 const Post = mongoose_1.default.model("Post", PostSchema);
 exports.default = Post;

@@ -12,7 +12,12 @@ exports.createPostValidation = zod_1.default.object({
     content: zod_1.default
         .string({ required_error: "content is required" })
         .min(5, "content at leant 5 characters"),
-    author: zod_1.default
-        .string({ required_error: "author is required" })
-        .url({ message: "Invalid Url" }),
+    author: zod_1.default.object({
+        name: zod_1.default
+            .string({ required_error: "author name is required" })
+            .min(3, "title at leant 3 characters"),
+        picture: zod_1.default
+            .string({ required_error: "picture is required" })
+            .url({ message: "Invalid Url" }),
+    }),
 });

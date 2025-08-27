@@ -44,7 +44,7 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-app.use("/api/", router);
+app.use("/api", router);
 
 // error handlers
 app.use(notfound);
