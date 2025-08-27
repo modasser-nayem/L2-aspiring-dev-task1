@@ -6,7 +6,6 @@ import { notfound } from "./app/middlewares/notFound";
 import { globalErrorHandler } from "./app/middlewares/globalErrorHandler";
 import config from "./app/config";
 import router from "./app/routes";
-import { dbConnect } from "./app/db";
 
 class App {
   public app: express.Application;
@@ -16,7 +15,6 @@ class App {
     this.config();
     this.routes();
     this.handleErrors();
-    dbConnect();
   }
 
   private config() {

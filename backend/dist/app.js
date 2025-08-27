@@ -11,14 +11,12 @@ const notFound_1 = require("./app/middlewares/notFound");
 const globalErrorHandler_1 = require("./app/middlewares/globalErrorHandler");
 const config_1 = __importDefault(require("./app/config"));
 const routes_1 = __importDefault(require("./app/routes"));
-const db_1 = require("./app/db");
 class App {
     constructor() {
         this.app = (0, express_1.default)();
         this.config();
         this.routes();
         this.handleErrors();
-        (0, db_1.dbConnect)();
     }
     config() {
         this.app.use((0, cors_1.default)({
