@@ -12,16 +12,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// index.ts
 const http_1 = require("http");
 const app_1 = __importDefault(require("./app"));
 const db_1 = require("./app/db");
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            yield (0, db_1.dbConnect)();
             const port = process.env.PORT || 5000;
             const server = (0, http_1.createServer)(app_1.default);
+            yield (0, db_1.dbConnect)();
             server.listen(port, () => {
                 console.log(`SERVER IS RUNNING ON PORT ${port}`);
             });
